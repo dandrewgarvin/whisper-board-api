@@ -88,4 +88,21 @@ io.on("connection", (socket) => {
 
     socket.broadcast.emit("resized", payload);
   });
+
+  socket.on("rename", (payload) => {
+    console.log("token renamed");
+
+    tokens = tokens.map((tkn) => {
+      if (
+        tkn.position.col === payload.position.col &&
+        tkn.position.row === payload.position.row
+      ) {
+        tkn.name = payload.name;
+      }
+
+      return tkn;
+    });
+
+    socket.broadcast.emit("renamed", payload);
+  });
 });
